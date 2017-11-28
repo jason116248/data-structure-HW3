@@ -26,7 +26,7 @@ mpointer ptr1;
 typedef struct method
 {
     int value;
-    int team[1000];
+    int team[1000];  //用來記錄在queue中的元素是屬於哪一個team的
 
     void ENQUEUE(int number, int Tim,mpointer mptr)
     {
@@ -40,8 +40,9 @@ typedef struct method
         }
         else
         {
+	    //跟前面的元素裡的team都不同，所以直接插在最後面。利用mptr還指著queue時，把
             space++;
-            ptr1 =  (mpointer) realloc( mptr, sizeof(method)* space  );
+            ptr1 =  (mpointer) realloc( mptr, sizeof(method)* space  ); 
         }
 
         (ptr1+space-1)->value = number; //把要新增的數字給新配置的記憶體位置
@@ -53,7 +54,7 @@ typedef struct method
         int k=0,temp;
         ptr1 = NULL;
         space++;
-        ptr1 = (mpointer) malloc(space * sizeof(method));
+        ptr1 = (mpointer) malloc(space * sizeof(method)); //
         for(int i=0; i<space; i++)
         {
             if(i == isPlace)
@@ -177,7 +178,7 @@ int main()
                 int enqueueNum,s, team, insert_place=-1;
                 ifs >> enqueueNum;
                 for( s=0; s<teamNum; s++)
-                {   //去比較接下來要輸入的數字是哪個team,要去mylist中的各個myset變數找
+                {   //去比較接下來要輸入的數字是哪個team,要去mylist中的各個myset形態的變數找
                     flag_enqueue = mylist.at(s).sameTeam(enqueueNum); 
                     if(flag_enqueue)
                         break; // means that the element belongs to this team
@@ -195,7 +196,7 @@ int main()
                     //if there is at least one element in the queue is in the same team with insertion
                     for(int i=space-1; i>=0; i--)
                     {
-                        if(team == M1.team[i])
+                        if(team == M1.team[i]) //如果在queue中找到同一個team的元素，就把此數插入在那個同team的數字後面
                         {
                             insert_place = i+1;
                             break;
