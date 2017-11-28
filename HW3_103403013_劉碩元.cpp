@@ -40,7 +40,7 @@ typedef struct method
         }
         else
         {
-	    //跟前面的元素裡的team都不同，所以直接插在最後面。利用mptr還指著queue時，把
+	    //跟前面的元素裡的team都不同，所以直接插在最後面。利用mptr還指著queue時，把ptr1重新分配記憶體大小
             space++;
             ptr1 =  (mpointer) realloc( mptr, sizeof(method)* space  ); 
         }
@@ -54,21 +54,21 @@ typedef struct method
         int k=0,temp;
         ptr1 = NULL;
         space++;
-        ptr1 = (mpointer) malloc(space * sizeof(method)); //
+        ptr1 = (mpointer) malloc(space * sizeof(method)); //把ptr1指向一個完全沒有值的記憶體，以便之後可以填新的值
         for(int i=0; i<space; i++)
         {
-            if(i == isPlace)
+            if(i == isPlace) //當i等於要插入新的值的位子時
             {
                 (ptr1+i)->value = number;
-                temp = team[i];
-                team[i] = Tim;
+                temp = team[i]; //原本在這個位子的數字的team是多少被temp記錄下來
+                team[i] = Tim; //被新增的數字的team取代
             }
 
             else
             {
-                (ptr1+i)->value = (mptr+k)->value;
+                (ptr1+i)->value = (mptr+k)->value; //讓指著原queue的指標mptr把裡面的值搬到新的記憶體中
                 if(k == isPlace)
-                    team[i] = temp;
+                    team[i] = temp; //讓原本被temp紀錄的原team給到新的位置
                 else
                     team[i] = team[k];
                 k++;
@@ -97,14 +97,14 @@ typedef struct method
             for(int k=0; k<space-1; k++)
                 team[k] = team[k+1];
 
-            mpointer dptr =(ptr1+1);
+            mpointer dptr =(ptr1+1); //不要第一個值，所以從指在第二個位置
             ptr1 = NULL;
             space--;
-            ptr1 = (mpointer) malloc( sizeof(method)* space );
+            ptr1 = (mpointer) malloc( sizeof(method)* space ); //重新分配新的比原來記憶體空間少一單位的記憶體空間
 
             for(int i=0; i < space; i++)
             {
-                (ptr1+i)->value = (dptr+i)->value;
+                (ptr1+i)->value = (dptr+i)->value; //把原本的值移到新的記憶體空間
             }
 
         }
