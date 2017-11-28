@@ -32,10 +32,10 @@ typedef struct method
     {
         ptr1 = NULL;
         team[space] = Tim;
-        if(space==0)
+        if(space==0) //完全沒有數字在queue
         {
             space++;
-            ptr1 = (mpointer) malloc(space * sizeof(method));
+            ptr1 = (mpointer) malloc(space * sizeof(method)); //利用指標指著配置的記憶體
 
         }
         else
@@ -44,7 +44,7 @@ typedef struct method
             ptr1 =  (mpointer) realloc( mptr, sizeof(method)* space  );
         }
 
-        (ptr1+space-1)->value = number;
+        (ptr1+space-1)->value = number; //把要新增的數字給新配置的記憶體位置
 
     }
 
@@ -125,26 +125,26 @@ int main()
     while(flag_while)
     {
         method M1;
-        vector<myset> mylist;
+        vector<myset> mylist; //創立myset形態的vector，
 
         int teamNum,num;
 
-        ifs >> teamNum;
+        ifs >> teamNum; //得到總共會有幾個team
         if(teamNum==0)
 			break;
 
         for(int i=0; i<teamNum; i++)
         {
-            mylist.push_back(myset());
+            mylist.push_back(myset()); //代表mylist這個容器內，已經創立了"teamNum"個 myset型態的變數
         }
 
         for(int k=0; k < teamNum; k++)
         {
-            ifs >> mylist.at(k).elementNum;
+            ifs >> mylist.at(k).elementNum; //elementNum 是紀錄一個team內總共有多少個的數字 的變數
             for(int j=0; j < mylist.at(k).elementNum; j++)
             {
                 ifs >> num;
-                mylist.at(k).var.push_back(num);
+                mylist.at(k).var.push_back(num); // 利用mylist內存的 myset形態中的變數(struct)中的內建vector存取這個team內的所有元素
             }
         }
         //enqueue or dequeue
@@ -177,14 +177,14 @@ int main()
                 int enqueueNum,s, team, insert_place=-1;
                 ifs >> enqueueNum;
                 for( s=0; s<teamNum; s++)
-                {
-                    flag_enqueue = mylist.at(s).sameTeam(enqueueNum);
+                {   //去比較接下來要輸入的數字是哪個team,要去mylist中的各個myset變數找
+                    flag_enqueue = mylist.at(s).sameTeam(enqueueNum); 
                     if(flag_enqueue)
                         break; // means that the element belongs to this team
                 }
                 team = s;
 
-                if(enqueue_count != 2)
+                if(enqueue_count != 2) //若queue中沒有任何數字
                 {
                     M1.ENQUEUE(enqueueNum,team,ptr1);
                     enqueue_count++;
