@@ -185,7 +185,7 @@ int main()
                 }
                 team = s;
 
-                if(enqueue_count != 2) //若queue中沒有任何數字
+                if(enqueue_count != 2) //若queue中沒有任何數字或只有一個數字
                 {
                     M1.ENQUEUE(enqueueNum,team,ptr1);
                     enqueue_count++;
